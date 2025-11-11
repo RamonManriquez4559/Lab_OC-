@@ -11,7 +11,7 @@ section .text
 _sumar:
     push ebp
     mov ebp, esp
-    mov eax, [ebp+8] ; Aqui se encuentra el segundo parametro de la funcion
+    mov eax, [ebp+8] ; Aqui se encuentra el primer parametro de la funcion
     add eax, [ebp+12] ; Aqui se encuentra el primer parametro de la funcion
     pop ebp
     ret
@@ -22,12 +22,15 @@ _sumar:
 _strlen:
     push ebp
     mov ebp, esp
-    mov eax, 0
+    push esi 
+    xor eax, eax
+    mov esi, [ebp+8]
     .loop:
-        cmp byte[ebp+8+eax], 0; Comprobar si la posicion es el caracter nulo
+        cmp byte[esi+eax], 0; Comprobar si la posicion es el caracter nulo
             je .salir
         inc eax
     jmp .loop
     .salir: 
+        pop esi
         pop ebp
         ret
