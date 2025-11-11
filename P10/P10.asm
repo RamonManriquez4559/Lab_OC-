@@ -22,16 +22,12 @@ _sumar:
 _strlen:
     push ebp
     mov ebp, esp
-    mov esi, 0
+    mov eax, 0
     .loop:
-        mov al, [ebp+4+esi]
-        cmp al, 0; Comprobar si la posicion es el caracter nulo
+        cmp byte[ebp+8+eax], 0; Comprobar si la posicion es el caracter nulo
             je .salir
-        call putchar
-        inc esi
+        inc eax
     jmp .loop
     .salir: 
-        mov eax, esi
         pop ebp
         ret
-
