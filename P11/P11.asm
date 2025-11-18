@@ -24,7 +24,7 @@ _pBin8b:
     mov ebx, [ebp + 8] ; Aqui esta el inicio del dato 
     mov ecx, 8
     call _imprimir 
-
+    
     pop ecx 
     pop ebx
     pop eax
@@ -33,23 +33,35 @@ _pBin8b:
     
 _pBin16b:
     push ebp
+    push eax
+    push ebx
+    push ecx
 
     mov ebp, esp
     mov ebx, [ebp + 8] ; Aqui esta el inicio del dato 
     mov ecx, 16
     call _imprimir
 
+    pop ecx 
+    pop ebx
+    pop eax
     pop ebp
     ret
 
 _pBin32b:
     push ebp
+    push eax
+    push ebx
+    push ecx
 
     mov ebp, esp
     mov ebx, [ebp + 8] ; Aqui esta el inicio del dato 
     mov ecx, 32
     call _imprimir
 
+    pop ecx 
+    pop ebx
+    pop eax
     pop ebp
     ret
 
