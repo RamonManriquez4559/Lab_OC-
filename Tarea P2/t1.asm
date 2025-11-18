@@ -7,6 +7,9 @@
 section .data
     mensaje db "Deng no se ha terminado Silkgod", 0xa, 0
 
+section .bss
+    invertido resb 128
+
 section .text
     define global _start
 
@@ -15,7 +18,7 @@ _start:
     mov ebx, mensaje
     call _printStr
     call _invertirStr
-    ;call _printStr
+    call _printStr
 
     mov eax, 1
     int 80h
@@ -44,32 +47,35 @@ _invertirStr:
     push eax
     push esi
     push edi ; Utilizaremos edi para guardar la cedena invertida de manera temporal
+    push edx
+    mov edx, invertido ; Direccion donde se guardara la cadena invertida
     mov edi, 0 ; trabajaremos con edi para el inicio de ebx y esi para el fin de la cadena
     ; Recorrer hasta encontrar el caracter nulo
     .buscar:
         cmp byte[ebx+esi], 0
             je .invertir
         inc esi
-        jmp .buscar
+    jmp .buscar
     ; Pasar a 'edx' la cadena de 'ebx' pero invertida
     .invertir:
         dec esi
-        cmp esi, -1
+        cmp esi, 0
             je .regresar
         mov al, [ebx+esi]
         mov [edx+edi], al
         inc edi
-        jmp .invertir
+    jmp .invertir
     ; Regresar a 'ebx' la cadena invertida en 'edx'
     .regresar:
-        cmp edi, -1
+        cmp edi, 0
             je .salir
         mov al, [edx + edi]
         mov [ebx+esi], al
         inc esi
         dec edi
-        jmp .regresar
+    jmp .regresar
     .salir:
+        pop edx
         pop edi
         pop esi
         pop eax
