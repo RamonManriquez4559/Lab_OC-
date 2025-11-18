@@ -9,8 +9,11 @@ extern void _pBin64b(uint64_t);
 int main(void) {
     printf("Imprimiendo dato de 8 bits\n");
     _pBin8b((uint8_t)(01010101));
-    printf("Imprimiendo dato de 16 bits\n");
-    printf("Imprimiendo dato de 32 bits\n");
-    printf("Imprimiendo dato de 64 bits\n");
+    printf("\nImprimiendo dato de 16 bits\n");
+    _pBin16b();
+    printf("\nImprimiendo dato de 32 bits\n");
+    _pBin32b();
+    printf("\nImprimiendo dato de 64 bits\n");
+    _pBin64b();
     return 0;
 }

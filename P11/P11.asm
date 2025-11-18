@@ -1,4 +1,4 @@
-%include "../LIB/pc_iox.inc" 
+extern putchar
 
 section .data
 
@@ -16,64 +16,82 @@ section .text
 
 _pBin8b:
     push ebp
+    push eax
+    push ebx
+    push ecx
+
     mov ebp, esp
-    call _limpiar
+    mov ebx, [ebp + 8] ; Aqui esta el inicio del dato 
     mov ecx, 8
     call _imprimir 
+
+    pop ecx 
+    pop ebx
+    pop eax
     pop ebp
     ret
     
 _pBin16b:
     push ebp
+
     mov ebp, esp
-    call _limpiar
+    mov ebx, [ebp + 8] ; Aqui esta el inicio del dato 
     mov ecx, 16
     call _imprimir
+
     pop ebp
     ret
 
 _pBin32b:
     push ebp
+
     mov ebp, esp
-    call _limpiar
+    mov ebx, [ebp + 8] ; Aqui esta el inicio del dato 
     mov ecx, 32
     call _imprimir
+
     pop ebp
     ret
 
 _pBin64b:
     push ebp
+    push eax
+    push ebx
+    push ecx
+
     mov ebp, esp
-    call _limpiar
+    mov ebx, [ebp + 12] ; +12 porque son palabras, 32 es una palabra y 32 es otra palabra 4 y 4 bytes 
     mov ecx, 64
     call _imprimir
+
+    pop ecx 
+    pop ebx
+    pop eax
     pop ebp
     ret
 
 _imprimir:
-    mov ebx, [ebp + 8] ; Aqui esta el inicio del dato 
     .loop:
-    shr ebx, 1 ; movemos al carry el bit menos significativo
-    jc .uno
+    shl ebx, 1 ; movemos al carry el bit mas significativo porque imprimimos de izquierda a derecha
+    jc .uno ; jump if carry
     jmp .cero
     .uno: 
         mov al, '1'
-        call putchar
+        call _myPutchar
         jmp .repetir
     .cero: 
         mov al, '0'
-        call putchar
+        call _myPutchar
     .repetir: 
         loop .loop ; se hara un loop de 8, 16, 32 o 64 veces dependiendo de a quien se llame
     ret
 
-_limpiar:
-    xor eax, eax
-    xor ecx, ecx
-    xor ebx, ebx
+_myPutchar:
+    push ebx
+    push ecx
+    push eax
+    call putchar
+    pop eax
+    pop ecx
+    pop ebx
     ret
-
-
-
-
-
