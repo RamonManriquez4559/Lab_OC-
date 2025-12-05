@@ -15,5 +15,6 @@ int main(void) {
     _pBin32b(32);
     printf("\nImprimiendo dato de 64 bits\n");
     _pBin64b(64);
+    printf("\n");
     return 0;
 }
